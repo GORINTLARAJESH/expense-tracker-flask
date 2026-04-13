@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ➕ Set Budget -->
+    <div class="card-custom mb-3">
+        <h5>Set Budget</h5>
+
+        <form method="POST" class="d-flex gap-2 flex-wrap">
+            <input type="number"
+                   name="budget"
+                   placeholder="Enter budget ₹"
+                   required
+                   class="form-control">
+
+            <button class="btn btn-custom">Save</button>
+
+            <!-- 🗑 Delete Button -->
+            <button type="button"
+                    onclick="deleteBudget()"
+                    class="btn btn-danger">
+                Delete
+            </button>
+        </form>
+    </div>
+
+    <!-- 📊 Analytics -->
+    <div class="row mb-3">
+
+        <div class="col-md-4">
+            <div class="card-custom text-center">
+                <h6>Total Budget</h6>
+                <h3>₹{{ total_budget or 0 }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-custom text-center">
+                <h6>Spent</h6>
+                <h3>₹{{ spent or 0 }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-custom text-center">
+                <h6>Remaining</h6>
+                <h3>₹{{ remaining or 0 }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 📈 Progress -->
+    <div class="card-custom mb-3">
+
+        <h6>Budget Usage: {{ percent_used or 0 }}%</h6>
+
+        <div class="progress mt-3">
+            <div class="progress-bar 
+                {% if over_budget %}bg-danger{% else %}bg-success{% endif %}"
+                style="width: {{ percent_used or 0 }}%">
+            </div>
+        </div>
+
+        {% if total_budget == 0 %}
+            <p class="text-warning mt-2">⚠️ Set your budget first</p>
+
+        {% elif over_budget %}
+            <p class="text-danger mt-2">🚨 Budget exceeded!</p>
+
+        {% else %}
+            <p class="text-success mt-2">✔ You are within your budget</p>
+        {% endif %}
+
+    </div>
+
+    <!-- 🍩 Chart -->
+    <div class="card-custom">
+        <h5>📊 Budget Distribution</h5>
+        <canvas id="budgetChart"></canvas>
+    </div>
+
+</div>
+
+<!-- 🗑 Delete Script -->
+<script>
+function deleteBudget(){
+    if(confirm("Delete your budget?")){
+        window.location.href = "/delete_budget";
+    }
+}
+</script>
+
+<!-- 📊 Chart Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (typeof Chart === "undefined") {
+        console.error("Chart.js not loaded ❌");
+        return;
+    }
+
+    const spent = {{ spent or 0 }};
+    const remaining = {{ remaining or 0 }};
+
+    if (spent === 0 && remaining === 0) return;
+
+    new Chart(document.getElementById("budgetChart"), {
+        type: "doughnut",
+        data: {
+            labels: ["Spent", "Remaining"],
+            datasets: [{
+                data: [spent, remaining],
+                backgroundColor: ["#ef4444", "#22c55e"]
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: "65%",
+            plugins: {
+                legend: {
+                    labels: { color: "#fff" }
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

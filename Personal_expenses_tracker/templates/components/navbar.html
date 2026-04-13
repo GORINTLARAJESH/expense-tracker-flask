@@ -1,0 +1,171 @@
+<!-- templates/components/navbar.html -->
+
+<div class="navbar-custom d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+    <!-- Left: Title -->
+    <div>
+        <h4 class="mb-0">
+            {{ title if title else "📊 Dashboard" }}
+        </h4>
+    </div>
+
+    <!-- Center: Search -->
+    <div class="search-box d-none d-md-block">
+        <input type="text" id="globalSearch" placeholder="Search..." class="form-control">
+        <i class="fas fa-search"></i>
+    </div>
+
+    <!-- Right: Icons -->
+    <div class="d-flex align-items-center gap-3">
+
+        <!-- Notification -->
+        <div class="icon-btn position-relative" title="Notifications">
+            <i class="fas fa-bell"></i>
+            <span class="badge-dot"></span>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+            <div class="icon-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li class="px-3 py-2 text-muted small">
+                    👤 {{ session.get('username', 'User') }}
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-user me-2"></i> Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= STYLES ================= -->
+<style>
+
+    .navbar-custom {
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Search */
+    .search-box {
+        position: relative;
+        width: 300px;
+    }
+
+    .search-box input {
+        background: rgba(255,255,255,0.08);
+        border: none;
+        color: white;
+        padding-left: 40px;
+        border-radius: 10px;
+    }
+
+    .search-box input:focus {
+        box-shadow: 0 0 10px #6366f1;
+        background: rgba(255,255,255,0.1);
+        color: white;
+    }
+
+    .search-box input::placeholder {
+        color: #94a3b8;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+    }
+
+    /* Icons */
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .icon-btn:hover {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        transform: scale(1.1);
+    }
+
+    .icon-btn i {
+        color: white;
+    }
+
+    /* Notification Dot */
+    .badge-dot {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        background: red;
+        border-radius: 50%;
+    }
+
+    /* Dropdown */
+    .dropdown-menu {
+        background: #1e293b;
+        border: none;
+        border-radius: 10px;
+        min-width: 180px;
+    }
+
+    .dropdown-item {
+        color: white;
+        transition: 0.2s;
+    }
+
+    .dropdown-item:hover {
+        background: #334155;
+    }
+
+</style>
+
+<!-- ================= OPTIONAL SEARCH SCRIPT ================= -->
+<script>
+const search = document.getElementById("globalSearch");
+
+if (search) {
+    search.addEventListener("keyup", function() {
+        console.log("Searching:", this.value);
+        // 🔥 You can connect this later to filter tables
+    });
+}
+</script>

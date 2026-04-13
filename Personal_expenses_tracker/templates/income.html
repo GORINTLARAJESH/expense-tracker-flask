@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- 🔥 Analytics -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="card-custom text-center">
+                <h6>Total Income</h6>
+                <h3>₹{{ total_income }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card-custom text-center">
+                <h6>Total Entries</h6>
+                <h3>{{ total_entries }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Income -->
+    <div class="card-custom mb-3">
+        <h5>Add Income</h5>
+
+        <form method="POST" class="d-flex gap-2">
+            <input type="text" name="source" placeholder="Source" required>
+            <input type="number" name="amount" placeholder="Amount ₹" required>
+            <input type="date" name="date" required>
+            <button class="btn btn-custom">Add</button>
+        </form>
+    </div>
+
+    <!-- Table -->
+    <div class="card-custom mb-3">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Source</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in incomes %}
+                <tr>
+                    <td>{{ i[1] }}</td>   <!-- date -->
+                    <td>{{ i[2] }}</td>   <!-- source -->
+                    <td>₹{{ i[3] }}</td>  <!-- amount -->
+                    <td>
+                        <!-- ✅ FIXED -->
+                        <button onclick="deleteIncome({{ i[0] }})"
+                                class="btn btn-danger btn-sm">🗑</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 📊 Income Chart -->
+    <div class="card-custom">
+        <h5>📈 Income Trend</h5>
+        <canvas id="incomeChart"></canvas>
+    </div>
+
+</div>
+
+<!-- Chart -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (typeof Chart === "undefined") {
+        console.error("Chart.js not loaded ❌");
+        return;
+    }
+
+    const labels = {{ months|tojson }};
+    const data = {{ monthly_income|tojson }};
+
+    if (!labels.length) return;
+
+    new Chart(document.getElementById("incomeChart"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Income",
+                data: data,
+                borderColor: "#22c55e",
+                backgroundColor: "rgba(34,197,94,0.2)",
+                tension: 0.3,
+                fill: true
+            }]
+        }
+    });
+
+});
+</script>
+
+<!-- Delete -->
+<script>
+function deleteIncome(id){
+    if(confirm("Delete income?")){
+        window.location.href = "/delete_income/" + id;
+    }
+}
+</script>
+
+{% endblock %}

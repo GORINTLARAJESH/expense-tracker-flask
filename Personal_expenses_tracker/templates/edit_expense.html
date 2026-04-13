@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Edit Expense</h3>
+
+<form method="POST" action="/update/{{ expense.id }}">
+
+    <input type="date" name="date" value="{{ expense.date }}" required>
+    
+    <select name="type">
+        <option value="income" {% if expense.type=='income' %}selected{% endif %}>Income</option>
+        <option value="expense" {% if expense.type=='expense' %}selected{% endif %}>Expense</option>
+    </select>
+
+    <input name="category" value="{{ expense.category }}" required>
+    <input name="amount" value="{{ expense.amount }}" required>
+
+    <button class="btn btn-success">Update</button>
+
+</form>
+
+{% endblock %}

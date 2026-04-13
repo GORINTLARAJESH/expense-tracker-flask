@@ -1,0 +1,139 @@
+/* ================= GLOBAL ================= */
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ================= CARDS ================= */
+
+.card-custom {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow effect */
+.card-custom::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99,102,241,0.2), transparent);
+    top: -50%;
+    left: -50%;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.card-custom:hover::before {
+    opacity: 1;
+}
+
+.card-custom:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+/* ================= BUTTON ================= */
+
+.btn-custom {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* ================= TABLE ================= */
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th {
+    background: rgba(255,255,255,0.08);
+    color: #cbd5f5;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Hover row */
+.table-hover tbody tr:hover {
+    background: rgba(99,102,241,0.1);
+    transition: 0.3s;
+}
+
+/* ================= CHART ================= */
+
+canvas {
+    margin-top: 10px;
+}
+
+/* ================= HEADINGS ================= */
+
+h5 {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6366f1;
+    border-radius: 10px;
+}
+
+/* ================= ANIMATION ================= */
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .card-custom {
+        padding: 15px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .btn-custom {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

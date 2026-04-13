@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Top Bar -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>📊 Dashboard Overview</h4>
+
+        <a href="/add_expense" class="btn btn-custom">
+            <i class="fas fa-plus"></i> Add Expense
+        </a>
+    </div>
+
+    <!-- Cards -->
+    {% include "components/cards.html" %}
+
+    <!-- Charts -->
+    <div class="row mt-4 g-4">
+
+        <!-- Combined Chart -->
+        <div class="col-md-12">
+            <div class="card-custom" style="height:400px;">
+                <h5>📊 Monthly Overview</h5>
+
+                {% if months %}
+                    <canvas id="monthlyChart"></canvas>
+                {% else %}
+                    <p class="text-muted">No data available</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Transactions -->
+    <div class="card-custom mt-4">
+        <h5>🧾 Recent Transactions</h5>
+
+        {% if transactions %}
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in transactions %}
+                    <tr>
+                        <td>{{ row.date }}</td>
+
+                        <td>
+                            {% if row.type == 'income' %}
+                                <span class="text-success fw-bold">Income</span>
+                            {% else %}
+                                <span class="text-danger fw-bold">Expense</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ row.category }}</td>
+
+                        <td class="fw-bold">₹ {{ row.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+            <p class="text-muted mt-3">No transactions yet</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- ✅ CORRECT DATA PASS -->
+<script>
+    const months = {{ months | tojson | safe }};
+    const monthly_data = {{ monthly_data | tojson | safe }};
+    
+    const categories = {{ categories |  tojson | safe }};
+    const category_data = {{ category_data |  tojson | safe }};
+</script>
+
+{% endblock %} 

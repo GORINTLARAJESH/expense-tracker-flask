@@ -1,0 +1,176 @@
+<!-- templates/components/sidebar.html -->
+
+<div class="sidebar" id="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+        <h3>💰 Finance</h3>
+    </div>
+
+    <!-- Menu -->
+    <ul class="menu">
+
+        <li class="menu-item active">
+            <a href="/dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="/add_expense">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Expense</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="#">
+                <i class="fas fa-chart-pie"></i>
+                <span>Analytics</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="#">
+                <i class="fas fa-wallet"></i>
+                <span>Budget</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- Bottom -->
+    <div class="sidebar-footer">
+        <a href="/logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+</div>
+
+<!-- Toggle Button (Mobile) -->
+<button class="toggle-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Styling -->
+<style>
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    transition: 0.3s;
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Menu */
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    margin: 10px 0;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    color: #cbd5f5;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+/* Hover */
+.menu-item a:hover {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Active */
+.menu-item.active a {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+/* Footer */
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f87171;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    color: white;
+}
+
+/* Toggle Button */
+.toggle-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #6366f1;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -240px;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .toggle-btn {
+        display: block;
+    }
+}
+
+</style>
+
+<!-- Script -->
+<script>
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+
+</script>
